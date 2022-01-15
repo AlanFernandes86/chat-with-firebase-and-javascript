@@ -16,6 +16,7 @@ class MainPage {
         this._htmlUl.onclick = this.selectLine;
     }
     
+    
     listeners() {
         document.getElementById('input')
         .oninput = ({ target: { value } }) => this._value = value;
