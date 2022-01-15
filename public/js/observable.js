@@ -13,7 +13,7 @@ export class Observable {
     console.log(listener);
     this._listeners.push(listener);
   }
-
+  
   get value() {
     return this._value;
   }

@@ -4,7 +4,6 @@ import { Observable } from "./observable.js";
 
 class MainPage {
     constructor() {
-
         this._value = '';
 
         this.listeners();
@@ -15,7 +14,7 @@ class MainPage {
         this._htmlUl = document.getElementById('list-test');
         this._htmlUl.onclick = this.selectLine;
     }
-    
+
     
     listeners() {
         document.getElementById('input')
@@ -48,14 +47,13 @@ class MainPage {
     }
 
     deleteData({ target: { id } }) {
-        console.log(id);
         update(ref(database, 'Testes'), {
             [id] : null,
         });
     }
 
-    selectLine({ target: { id } }) {
-
+    selectLine({ target: { id } , currentTarget }) {
+        
     }
         
     createLi(data) {
