@@ -16,8 +16,7 @@ class MainPage {
                 
         this._input = document.getElementById('input');
         this._btnInsert = document.getElementById('btn-insert');
-        this._btnClear = document.getElementById('btn-clear');
-
+        
         this.listeners();
     }
 
@@ -30,8 +29,6 @@ class MainPage {
         }
 
         this._btnInsert.onclick = (_) => this.upsertData(this._selectedLi.value);
-
-        this._btnClear.onclick = (_) => this._selectedLi.value = undefined;
 
         this._htmlUl.onclick = (event) => this.selectLi(event);
 
@@ -57,7 +54,9 @@ class MainPage {
     upsertData(key) {
         update(ref(database, 'Testes'), {
             [key || Date.now()] : this._value,
-        });
+        })
+        .then(() => this._selectedLi.value = undefined)
+        .catch((error) => console.error(error));
     }
 
     deleteData({ target: { id } }) {
@@ -67,6 +66,8 @@ class MainPage {
     }
 
     selectLi({ target: { id } , currentTarget: { childNodes } }) {
+        if (!Array.from(childNodes).find(({ id: childId }) => childId === id)) return;
+
         childNodes.forEach( ({ classList, id: childId }) => {
             if (id === childId) { 
                 classList.add('selected');
@@ -78,15 +79,15 @@ class MainPage {
     }
 
     hasSelected(selected) {
-        const li = document.querySelector('.selected');
-        
+            
         if (selected) {
             this._btnInsert.innerText = 'Atualizar';
             this._input.value = this._list.value[selected];
+            this._input.dispatchEvent(new Event('input'));
         } else {
             this._btnInsert.innerText = 'Inserir';
             this._input.value = '';
-            li.classList.remove('selected');
+            document.querySelector('.selected').classList.remove('selected');
         }
 
         this._input.focus();
