@@ -79,15 +79,16 @@ class MainPage {
     }
 
     hasSelected(selected) {
-            
+        
         if (selected) {
             this._btnInsert.innerText = 'Atualizar';
             this._input.value = this._list.value[selected];
             this._input.dispatchEvent(new Event('input'));
         } else {
+            const li = document.querySelector('.selected');
             this._btnInsert.innerText = 'Inserir';
             this._input.value = '';
-            document.querySelector('.selected').classList.remove('selected');
+            if (li) li.classList.remove('selected');
         }
 
         this._input.focus();
