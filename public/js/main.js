@@ -53,7 +53,7 @@ class MainPage {
     }
 
     selectLine({ target: { id } , currentTarget }) {
-        
+        console.log(currentTarget);
     }
         
     createLi(data) {
