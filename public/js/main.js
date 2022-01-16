@@ -3,7 +3,9 @@ import { ref, set, update, onValue, push} from "https://www.gstatic.com/firebase
 import { Observable } from "./observable.js";
 
 class MainPage {
-    constructor() {
+    constructor(user) {
+        this._user = user;
+
         this._value = '';
         
         this._list = new Observable({});
@@ -82,15 +84,14 @@ class MainPage {
         
         if (selected) {
             this._btnInsert.innerText = 'Atualizar';
-            this._input.value = this._list.value[selected];
-            this._input.dispatchEvent(new Event('input'));
+            this._input.value = this._list.value[selected];            
         } else {
             const li = document.querySelector('.selected');
             this._btnInsert.innerText = 'Inserir';
             this._input.value = '';
             if (li) li.classList.remove('selected');
         }
-
+        this._input.dispatchEvent(new Event('input'));
         this._input.focus();
     }
         

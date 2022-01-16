@@ -1,25 +1,19 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
+import { 
+  getAuth, 
+  signInWithRedirect, 
+  getRedirectResult, 
+  GoogleAuthProvider, 
+  onAuthStateChanged,
+  signOut as _signOut,
+} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-signInWithPopup(auth, provider)
-.then((result) => {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-  const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    console.log(token);
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+export const signIn = async () => signInWithRedirect(auth, provider);
+
+export const singOut = async () => _signOut(auth);
+
+export const getResult = async () => getRedirectResult(auth);
+
+export const onStateChanged = async (callback) => onAuthStateChanged(auth, callback);
