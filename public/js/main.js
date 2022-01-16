@@ -5,35 +5,49 @@ import { Observable } from "./observable.js";
 class MainPage {
     constructor() {
         this._value = '';
+        
+        this._list = new Observable({});
+        this._list.subscribe((newValue) => this.updateData(newValue));
+
+        this._selectedLi = new Observable();
+        this._selectedLi.subscribe((newValue) => this.hasSelected(newValue));
+        
+        this._htmlUl = document.getElementById('list-test');
+                
+        this._input = document.getElementById('input');
+        this._btnInsert = document.getElementById('btn-insert');
+        this._btnClear = document.getElementById('btn-clear');
 
         this.listeners();
-
-        this.list = new Observable({});
-        this.list.subscribe((newValue) => this.listData(newValue));
-
-        this._htmlUl = document.getElementById('list-test');
-        this._htmlUl.onclick = this.selectLine;
     }
 
     
     listeners() {
-        document.getElementById('input')
-        .oninput = ({ target: { value } }) => this._value = value;
+        this._input.oninput = ({ target: { value } }) => this._value = value;
+        
+        this._input.onkeyup = ({ key }) => {
+            if (key === 'Enter') this._btnInsert.click(); 
+        }
 
-        document.getElementById('btn')
-        .onclick = (_) => this.upsertData();
+        this._btnInsert.onclick = (_) => this.upsertData(this._selectedLi.value);
+
+        this._btnClear.onclick = (_) => this._selectedLi.value = undefined;
+
+        this._htmlUl.onclick = (event) => this.selectLi(event);
 
         onValue(ref(database, 'Testes'), (snapshot) => {
-            this.list.value = snapshot.val();
+            this._list.value = snapshot.val();
         });
     }
 
-    htmlUlReset() {
+    htmlReset() {
         this._htmlUl.innerHTML = '';
+        this._input.value = '';
+        this._btnInsert.innerText = 'Inserir';
     }
     
-    listData(data) {
-        this.htmlUlReset();
+    updateData(data) {
+        this.htmlReset();
         Object.entries(data).forEach( (entry) => {
             this._htmlUl
             .appendChild(this.createLi(entry));
@@ -52,8 +66,30 @@ class MainPage {
         });
     }
 
-    selectLine({ target: { id } , currentTarget }) {
-        console.log(currentTarget);
+    selectLi({ target: { id } , currentTarget: { childNodes } }) {
+        childNodes.forEach( ({ classList, id: childId }) => {
+            if (id === childId) { 
+                classList.add('selected');
+                this._selectedLi.value = id;
+            } else {
+                classList.remove('selected')
+            };
+        });
+    }
+
+    hasSelected(selected) {
+        const li = document.querySelector('.selected');
+        
+        if (selected) {
+            this._btnInsert.innerText = 'Atualizar';
+            this._input.value = this._list.value[selected];
+        } else {
+            this._btnInsert.innerText = 'Inserir';
+            this._input.value = '';
+            li.classList.remove('selected');
+        }
+
+        this._input.focus();
     }
         
     createLi(data) {

@@ -10,7 +10,6 @@ export class Observable {
   }
 
   subscribe(listener) {
-    console.log(listener);
     this._listeners.push(listener);
   }
   
