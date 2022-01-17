@@ -2,35 +2,54 @@ import { database, analytics } from "./init-firebase.js";
 import { ref, set, update, onValue, push} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
 import { Observable } from "./observable.js";
 
-class MainPage {
-    constructor(user) {
-        this._user = user;
+class MainPage extends HTMLElement {
 
-        this._value = '';
+    connectedCallback(user) {
+        this.innerHTML = `<section>
+        <div class="div-message">
+        <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label" id="mdc-message">
+          <span class="mdc-notched-outline">
+            <span class="mdc-notched-outline__leading"></span>
+            <span class="mdc-notched-outline__trailing"></span>
+          </span>
+          <input class="mdc-text-field__input" type="text" aria-label="Label" id="input-message">
+        </label>
+  
+        <button class="mdc-button" id="btn-message">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label"></span>
+        </button>
+      </div>
+      <ul id="test-list" class="ul-main"></ul>
+      </section>`;
+
+        this._user = user;
         
+        this._value = '';
+                
         this._list = new Observable({});
         this._list.subscribe((newValue) => this.updateData(newValue));
 
-        this._selectedLi = new Observable();
-        this._selectedLi.subscribe((newValue) => this.hasSelected(newValue));
+        this._selectedId = new Observable();
+        this._selectedId.subscribe((newValue) => this.hasSelected(newValue));
         
-        this._htmlUl = document.getElementById('list-test');
+        this._htmlUl = document.getElementById('test-list');
                 
-        this._input = document.getElementById('input');
-        this._btnInsert = document.getElementById('btn-insert');
+        this._input = document.getElementById('input-message');
+        this._btnMessage = document.getElementById('btn-message');
         
         this.listeners();
+        this.materialDesign();
     }
-
-    
+        
     listeners() {
         this._input.oninput = ({ target: { value } }) => this._value = value;
         
         this._input.onkeyup = ({ key }) => {
-            if (key === 'Enter') this._btnInsert.click(); 
+            if (key === 'Enter') this._btnMessage.click(); 
         }
 
-        this._btnInsert.onclick = (_) => this.upsertData(this._selectedLi.value);
+        this._btnMessage.onclick = (_) => this.upsertData(this._selectedId.value);
 
         this._htmlUl.onclick = (event) => this.selectLi(event);
 
@@ -39,10 +58,15 @@ class MainPage {
         });
     }
 
+    materialDesign() {
+        mdc.textField.MDCTextField.attachTo(document.getElementById('mdc-message'));
+        mdc.ripple.MDCRipple.attachTo(this._btnMessage);
+    }
+
     htmlReset() {
         this._htmlUl.innerHTML = '';
         this._input.value = '';
-        this._btnInsert.innerText = 'Inserir';
+        this._btnMessage.innerText = 'Inserir';
     }
     
     updateData(data) {
@@ -57,7 +81,7 @@ class MainPage {
         update(ref(database, 'Testes'), {
             [key || Date.now()] : this._value,
         })
-        .then(() => this._selectedLi.value = undefined)
+        .then(() => this._selectedId.value = undefined)
         .catch((error) => console.error(error));
     }
 
@@ -73,7 +97,7 @@ class MainPage {
         childNodes.forEach( ({ classList, id: childId }) => {
             if (id === childId) { 
                 classList.add('selected');
-                this._selectedLi.value = id;
+                this._selectedId.value = id;
             } else {
                 classList.remove('selected')
             };
@@ -81,13 +105,12 @@ class MainPage {
     }
 
     hasSelected(selected) {
-        
         if (selected) {
-            this._btnInsert.innerText = 'Atualizar';
+            this._btnMessage.innerText = 'Atualizar';
             this._input.value = this._list.value[selected];            
         } else {
             const li = document.querySelector('.selected');
-            this._btnInsert.innerText = 'Inserir';
+            this._btnMessage.innerText = 'Inserir';
             this._input.value = '';
             if (li) li.classList.remove('selected');
         }
@@ -113,4 +136,13 @@ class MainPage {
     } 
 }
 
-export const mainPage = () => new MainPage();
+export const registerMainPage = (user) => customElements.define('main-page', MainPage);
+
+class SignInPage extends HTMLElement {
+    connectedCallback( )  {
+        this.innerHTML = `<h2>Você não está logado!</h2>`
+    }    
+}
+
+export const registerSignInPage = () => customElements.define('sign-in-page', SignInPage);
+

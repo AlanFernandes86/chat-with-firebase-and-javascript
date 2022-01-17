@@ -4,34 +4,62 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: ghostwhite;
+}
+
 main {
   padding: 16px;
 }
 
-ul {
+.ul-main {
   padding: 0;
+  margin-top: 16px;
 }
 
-li {
+.ul-main li {
   display: flex;
+  background-color: white;
   align-items: center;
   list-style: none;
-  padding: 0;
-  margin-bottom: 16px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
 }
 
-li:last-child {
+.ul-main li:last-child {
   margin-bottom: 0;
 }
 
-li span {
+.ul-main li span {
   margin-right: 16px;
 }
 
-li span:hover {
+.ul-main li span:hover {
   cursor: pointer;
 }
 
-.selected {
+.ul-main .selected {
   background-color: darkgrey;
+}
+
+.div-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.div-message label {
+  display: flex;
+  flex-shrink: 1;
+  flex-grow: 1;
+  margin-right: 4px;
+}
+
+.div-message button {
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 2;
 }
