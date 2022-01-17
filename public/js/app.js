@@ -13,31 +13,23 @@ const app = async () => {
 async function login() {
     const root = document.getElementById('root-element');
     const btnLogin = document.getElementById('login');
-    const singInPage = document.createElement('sign-in-page');
-    const mainPage = document.createElement('main-page');
-    const linearProgress = mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));   
-    linearProgress.foundation.adapter.addClass('mdc-linear-progress--indeterminate');
-
-    console.dir(linearProgress);
-
+     
     await onStateChanged(async (user) => {
         if (user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
             const uid = user.uid;
             
-            root.appendChild(mainPage);            
+            root.innerHTML = '<main-page></main-page>';         
             btnLogin.innerText = 'logout';
             btnLogin.onclick = singOut;
         } else {
-            root.appendChild(singInPage);
+            root.innerHTML = '<sign-in-page></sign-in-page>';
             btnLogin.innerText = 'login';
             btnLogin.onclick = signIn;
         }
     });
-
     
-
     await getResult()
         .then((result) => {
             console.log(result.user);
