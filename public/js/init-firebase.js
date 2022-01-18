@@ -8,15 +8,16 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCxfaihYZ9EluzBQHG6sFSkKpzVArFYtug",
-  authDomain: "marmitando-caee3.firebaseapp.com",
-  databaseURL: "https://marmitando-caee3-default-rtdb.firebaseio.com",
-  projectId: "marmitando-caee3",
-  storageBucket: "marmitando-caee3.appspot.com",
-  messagingSenderId: "203707805462",
-  appId: "1:203707805462:web:969c8ee7bbce619fa86a37",
-  measurementId: "G-DPV8YYRQZ6"
+  apiKey: "AIzaSyB4Is6xtQSz12Xg2-bGSue8MkUcv1CzINM",
+  authDomain: "alan-chat-web-app.firebaseapp.com",
+  databaseURL: "https://alan-chat-web-app-default-rtdb.firebaseio.com",
+  projectId: "alan-chat-web-app",
+  storageBucket: "alan-chat-web-app.appspot.com",
+  messagingSenderId: "584133101786",
+  appId: "1:584133101786:web:cab866d7978cead33fbde3",
+  measurementId: "G-WCPY7HCSH3"
 };
 
 // Initialize Firebase
