@@ -62,6 +62,11 @@ class MainPage extends HTMLElement {
         onValue(ref(database, 'messages'), async (snap) => {
             const acc = [];
 
+            if(!snap.val()) {
+                this._list.value = acc;
+                return;
+            }
+            
             const entries = Object.entries(snap.val());
 
             entries.forEach(([key, { message, uid }], index, array) => {

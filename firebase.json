@@ -26,8 +26,5 @@
     "ui": {
       "enabled": false
     }
-  },
-  "database": {
-    "rules": "database.rules.json"
   }
 }

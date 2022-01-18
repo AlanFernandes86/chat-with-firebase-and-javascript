@@ -28,8 +28,7 @@ async function login() {
             set(ref(database, `users/${uid}`), { 
                 name: displayName,
                 photoUrl: photoURL,
-            })
-            console.log(result.user);
+            });
         })
         .catch((error) => {
 
