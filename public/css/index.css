@@ -8,13 +8,50 @@ body {
   background-color: ghostwhite;
 }
 
-.message {
+/* main {
+  max-width: 1024px;
+  margin: 0 auto;
+} */
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 79vh;
+  justify-content: flex-end;
+  margin-bottom: 12vh;
+}
+
+.div-controls {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 12vh;
   padding: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1;
+  flex-grow: 1;
+  background-color: white;
+}
+
+.div-controls label {
+  display: flex;
+  flex-shrink: 1;
+  flex-grow: 1;
+  margin-right: 4px;
+}
+
+.div-controls button {
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 2;
 }
 
 .ul-main {
-  padding: 0;
-  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
 }
 
 .ul-main li {
@@ -28,7 +65,7 @@ body {
 }
 
 .ul-main li:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 .ul-main li span {
@@ -43,23 +80,4 @@ body {
   background-color: darkgrey;
 }
 
-.div-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 1;
-  flex-grow: 1;
-}
 
-.div-message label {
-  display: flex;
-  flex-shrink: 1;
-  flex-grow: 1;
-  margin-right: 4px;
-}
-
-.div-message button {
-  display: flex;
-  flex-grow: 0;
-  flex-shrink: 2;
-}

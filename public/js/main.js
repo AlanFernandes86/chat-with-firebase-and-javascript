@@ -3,8 +3,8 @@ import { ref, set, update, onValue, push, child, get, onChildAdded } from "https
 import { Observable } from "./observable.js";
 
 const __template = document.createElement('template');
-__template.innerHTML = `<section class="message">
-<div class="div-message">
+__template.innerHTML = `<section class="main-page">
+<div class="div-controls">
   <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label" id="mdc-message">
     <span class="mdc-notched-outline">
       <span class="mdc-notched-outline__leading"></span>
