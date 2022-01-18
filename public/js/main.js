@@ -108,6 +108,11 @@ class MainPage extends HTMLElement {
         })
 
         this._progress.remove();
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        window.scrollTo(0,document.body.scrollHeight);
     }
 
     createLi({ time, uid, name, photoUrl, message }) {
