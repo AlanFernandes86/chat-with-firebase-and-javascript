@@ -14,6 +14,6 @@ export const signIn = async () => signInWithRedirect(auth, provider);
 
 export const singOut = async () => _signOut(auth);
 
-export const getResult = async () => getRedirectResult(auth);
+export const getResult = () => getRedirectResult(auth);
 
 export const onStateChanged = async (callback) => onAuthStateChanged(auth, callback);
