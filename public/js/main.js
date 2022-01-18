@@ -18,7 +18,7 @@ __template.innerHTML = `<section class="main-page">
     <span class="mdc-button__label"></span>
   </button>
 </div>
-<ul id="test-list" class="ul-main"></ul>
+<ul id="test-list" class="ul-messages-list"></ul>
 </section>`;
 
 class MainPage extends HTMLElement {
@@ -58,8 +58,6 @@ class MainPage extends HTMLElement {
         }
 
         this._btnMessage.onclick = (_) => this.upsertData(this._selectedId.value);
-
-        this._htmlUl.onclick = (event) => this.selectLi(event);
 
         onValue(ref(database, 'messages'), async (snap) => {
             const acc = [];
@@ -127,13 +125,18 @@ class MainPage extends HTMLElement {
         li.append(span);
 
         li.id = time;
-        li.append(`${name} : ${message}`);
+
+        li.onclick = (event) => this.selectLi(event);
+
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = `<strong>${name}:</strong> <br> ${message}`;
+
+        li.append(paragraph);
 
         return li;
     }
 
     upsertData(key) {
-        console.log(this._user);
         const reference = ref(database, `messages/${key || Date.now()}`);
         update(reference, {
             uid: this._user.uid,
@@ -149,7 +152,8 @@ class MainPage extends HTMLElement {
         });
     }
 
-    selectLi({ target: { id }, currentTarget: { childNodes } }) {
+    selectLi({ currentTarget: { id } }) {
+        const { childNodes } = this._htmlUl;
         if (!Array.from(childNodes).find(({ id: childId }) => childId === id)) return;
 
         childNodes.forEach(({ classList, id: childId }) => {

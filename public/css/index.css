@@ -48,14 +48,15 @@ body {
   flex-shrink: 2;
 }
 
-.ul-main {
+.ul-messages-list {
   display: flex;
   flex-direction: column;
   padding: 16px;
 }
 
-.ul-main li {
+.ul-messages-list li {
   display: flex;
+  flex-wrap: wrap;
   background-color: white;
   align-items: center;
   list-style: none;
@@ -64,20 +65,25 @@ body {
   border-radius: 8px;
 }
 
-.ul-main li:last-child {
+.ul-messages-list li:last-child {
   margin-bottom: 0px;
 }
 
-.ul-main li span {
+.ul-messages-list li span {
   margin-right: 16px;
+  max-width: 15%;
 }
 
-.ul-main li span:hover {
+.ul-messages-list li span:hover {
   cursor: pointer;
 }
 
-.ul-main .selected {
+.ul-messages-list .selected {
   background-color: darkgrey;
+}
+
+.ul-messages-list p {
+  max-width: 82%;
 }
 
 
